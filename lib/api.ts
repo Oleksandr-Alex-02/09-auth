@@ -7,7 +7,12 @@ export interface NoteData {
     totalPages: number;
 }
 const NOTEHUB_TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-axios.defaults.baseURL = "https://notehub-public.goit.study/api";
+// axios.defaults.baseURL = "https://notehub-public.goit.study/api";
+
+const nextServer = axios.create({
+    baseURL: 'http://localhost:3000/api',
+    withCredentials: true, // дозволяє axios працювати з cookie
+});
 
 export const fetchNotes = async (
     currentPage: number,
@@ -15,7 +20,7 @@ export const fetchNotes = async (
     perPage?: number,
     tag?: string
 ): Promise<NoteData> => {
-    const response = await axios.get<NoteData>("/notes", {
+    const response = await nextServer.get<NoteData>("/notes", {
         params: {
             search: searchQuery,
             page: currentPage,
@@ -32,7 +37,7 @@ export const fetchNotes = async (
 };
 
 export const getIdNotes = async (noteId: string) => {
-    const res = await axios.get<Note>(
+    const res = await nextServer.get<Note>(
         `/notes/${noteId}`, {
         headers: {
             accept: "application/json",
@@ -44,7 +49,7 @@ export const getIdNotes = async (noteId: string) => {
 }
 
 export const deleteNote = async (noteId: string) => {
-    const res = await axios.delete<Note>(
+    const res = await nextServer.delete<Note>(
         `/notes/${noteId}`, {
         headers: {
             accept: "application/json",
@@ -56,7 +61,7 @@ export const deleteNote = async (noteId: string) => {
 }
 
 export const createNote = async (noteData: NoteFormType) => {
-    const res = await axios.post<Note>(
+    const res = await nextServer.post<Note>(
         `/notes`, noteData, {
         headers: {
             accept: "application/json",
@@ -75,7 +80,7 @@ export const createNote = async (noteData: NoteFormType) => {
 // }
 
 // export const patchNote = async (noteUpdate: NoteUpdate) => {
-//     const res = await axios.patch<NoteData>(
+//     const res = await nextServer.patch<NoteData>(
 //         `/notes/${noteUpdate.id}`, {
 //         params: {
 //             title: noteUpdate.title,
@@ -89,3 +94,23 @@ export const createNote = async (noteData: NoteFormType) => {
 //     });
 //     return res.data;
 // }
+
+export type RegisterRequest = {
+    email: string;
+    password: string;
+    userName: string;
+};
+
+export type User = {
+    id: string;
+    email: string;
+    userName?: string;
+    photoUrl?: string;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+export const register = async (data: RegisterRequest) => {
+    const res = await nextServer.post<User>('/auth/register', data);
+    return res.data;
+};
