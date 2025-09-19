@@ -1,6 +1,7 @@
 
 import Link from "next/link"
 import css from './Header.module.css'
+import AuthNavigation from '@/components/AuthProvider/AuthProvider';
 import TagsMenu from "../TagsMenu/TagsMenu"
 
 export default function Header() {
@@ -24,6 +25,7 @@ export default function Header() {
                     <li>
                         <Link href="/sign-up">Register</Link>
                     </li>
+                    <AuthNavigation />
                 </ul>
             </nav>
         </header>
