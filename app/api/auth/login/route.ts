@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
         // Виконуємо запит до API
         const apiRes = await api.post('auth/login', body);
         // Ініціалізуємо cookieStore
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
         // Дістаємо set-cookie з хедерів відповіді
         const setCookie = apiRes.headers['set-cookie'];
         if (setCookie) {
@@ -29,7 +29,6 @@ export async function POST(req: NextRequest) {
                     maxAge: Number(parsed['Max-Age']),
                 };
                 // Встановлюємо токени
-                const cookieStore = await cookies();
                 const accessToken = parsed.accessToken ?? parsed.accesstoken;
 
                 if (accessToken) {

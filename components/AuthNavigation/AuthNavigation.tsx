@@ -2,7 +2,6 @@
 'use client';
 
 import { useAuthStore } from "@/lib/store/authStore";
-import Link from "next/link";
 
 export default function AuthNavigation() {
     const { user, clearAuth } = useAuthStore();
