@@ -14,3 +14,15 @@ export interface NoteFormType {
 }
 
 export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+
+export type UserAuthRequest = {
+    email: string;
+    password: string;
+    // username?: string;
+};
+
+export interface User {
+    email: string;
+    username: string;
+    avatar: string;
+}

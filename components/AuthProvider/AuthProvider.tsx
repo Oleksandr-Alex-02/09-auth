@@ -1,47 +1,42 @@
-// components/AuthNavigation/AuthNavigation.tsx
+"use client";
 
-'use client';
+import { checkSession, getUser } from "@/lib/api/clientApi";
+import { useAuthStore } from "@/lib/store/authStore";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/lib/store/authStore';
-import { logout } from '@/lib/clientApi';
-
-const AuthNavigation = () => {
+export default function AuthProvider({ children }: { children: React.ReactNode }) {
+    const { setUser, clearAuth } = useAuthStore();
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
-    // Отримуємо поточну сесію та юзера
-    const { isAuthenticated, user } = useAuthStore();
-    // Отримуємо метод очищення глобального стану
-    const clearIsAuthenticated = useAuthStore(
-        (state) => state.clearIsAuthenticated,
-    );
 
-    const handleLogout = async () => {
-        // Викликаємо logout
-        await logout();
-        // Чистимо глобальний стан
-        clearIsAuthenticated();
-        // Виконуємо навігацію на сторінку авторизації
-        router.push('/sign-in');
-    };
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const isAuthenticated = await checkSession();
+                if (isAuthenticated) {
+                    const user = await getUser();
+                    if (user) {
+                        setUser(user);
+                    } else {
+                        clearAuth();
+                        router.replace("/sign-in");
+                    }
+                } else {
+                    clearAuth();
+                    router.replace("/sign-in");
+                }
+            } catch (error) {
+                console.error("Session check failed:", error);
+                clearAuth();
+                router.replace("/sign-in");
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    // Якщо є сесія - відображаємо кнопку Logout та інформацію про користувача
-    // інакше - лінки для авторизації
-    return isAuthenticated ? (
-        <li>
-            <p>{user?.email}</p>
-            <button onClick={handleLogout}>Logout</button>
-        </li>
-    ) : (
-        <>
-            <li>
-                <Link href="/sign-in">Login</Link>
-            </li>
-            <li>
-                <Link href="/sign-up">Sign up</Link>
-            </li>
-        </>
-    );
-};
+        fetchUser();
+    }, [setUser, clearAuth]);
 
-export default AuthNavigation;
+    return loading ? <p>Loading...</p> : children;
+}

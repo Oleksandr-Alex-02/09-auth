@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from 'react';
 import AvatarPicker from '@/components/AvatarPicker/AvatarPicker';
-import { updateMe, getMe, uploadImage } from '@/lib/clientApi';
+import { updateMe, getMe, uploadImage } from '@/lib/api/clientApi';
 
 const EditProfile = () => {
     const [userName, setUserName] = useState('');

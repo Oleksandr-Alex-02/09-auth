@@ -1,7 +1,7 @@
 // app/(private routes)/profile/page.tsx
 
 import Link from 'next/link';
-import { getServerMe } from '@/lib/serverApi';
+import { getServerMe } from '@/lib/api/serverApi';
 
 const Profile = async () => {
     const user = await getServerMe();
