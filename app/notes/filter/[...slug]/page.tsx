@@ -1,6 +1,6 @@
 
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
-import { fetchNotes } from "@/lib/api";
+import { fetchNotes } from "@/lib/api/serverApi";
 import { Metadata } from "next";
 
 import NotesClient from "./Notes.client"
@@ -45,7 +45,7 @@ export default async function Notes({ params }: Props) {
 
     await qc.prefetchQuery({
         queryKey: ["notes", search, initPage, tag],
-        queryFn: () => fetchNotes(initPage, search, perPage, tag),
+        queryFn: () => fetchNotes(search, perPage, initPage, tag),
     })
 
     console.log(slug[0])

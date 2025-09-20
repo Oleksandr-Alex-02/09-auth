@@ -1,11 +1,10 @@
 
-import Link from "next/link"
-import css from './Header.module.css'
-import AuthNavigation from '@/components/AuthProvider/AuthProvider';
-import TagsMenu from "../TagsMenu/TagsMenu"
+import Link from "next/link";
+import css from './Header.module.css';
+import AuthNavigation from '@/components/AuthNavigation/AuthNavigation';
+import TagsMenu from "../TagsMenu/TagsMenu";
 
 export default function Header() {
-
     return (
         <header className={css.header}>
             <Link href="/" aria-label="Home">
@@ -29,5 +28,5 @@ export default function Header() {
                 </ul>
             </nav>
         </header>
-    )
+    );
 }

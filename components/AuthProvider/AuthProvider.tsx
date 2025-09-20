@@ -1,11 +1,16 @@
-"use client";
+
+'use client';
 
 import { checkSession, getUser } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 
-export default function AuthProvider({ children }: { children: React.ReactNode }) {
+interface AuthProviderProps {
+    children: ReactNode;
+}
+
+export default function AuthProvider({ children }: AuthProviderProps) {
     const { setUser, clearAuth } = useAuthStore();
     const [loading, setLoading] = useState(true);
     const router = useRouter();

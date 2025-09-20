@@ -9,7 +9,7 @@ export interface FetchNotesResponse {
     totalPages: number;
 }
 
-export async function fetchNotesServer(
+export async function fetchNotes(
     search: string,
     page: number,
     perPage?: number,
@@ -17,8 +17,8 @@ export async function fetchNotesServer(
 ) {
     return (await nextServer.get<FetchNotesResponse>("/notes", {
         params: {
-            search,
             page,
+            search,
             perPage,
             tag,
         },

@@ -29,9 +29,13 @@ export async function POST(req: NextRequest) {
                     maxAge: Number(parsed['Max-Age']),
                 };
                 // Встановлюємо токени
-                if (parsed.accessToken) {
-                    cookieStore.set('accessToken', parsed.accessToken, options);
+                const cookieStore = await cookies();
+                const accessToken = parsed.accessToken ?? parsed.accesstoken;
+
+                if (accessToken) {
+                    cookieStore.set('accessToken', accessToken, options);
                 }
+
                 if (parsed.refreshToken) {
                     cookieStore.set('refreshToken', parsed.refreshToken, options);
                 }
