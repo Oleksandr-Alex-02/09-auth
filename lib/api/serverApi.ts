@@ -38,7 +38,7 @@ export async function deleteNote(noteId: string) {
     });
 }
 
-export async function fetchNoteById(noteId: string) {
+export async function getIdNotes(noteId: string) {
     return (await nextServer.get<Note>(`/notes/${noteId}`, {
         headers: { Cookie: (await cookies()).toString() }
     })).data;
