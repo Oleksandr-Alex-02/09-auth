@@ -1,5 +1,3 @@
-// app/(public routes)/layout.tsx
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -15,7 +13,6 @@ export default function PublicLayout({ children }: Props) {
     const router = useRouter();
 
     useEffect(() => {
-        // refresh викличе перезавантаження даних
         router.refresh();
         setLoading(false);
     }, [router]);
