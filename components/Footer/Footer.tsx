@@ -11,7 +11,7 @@ export default function Footer() {
                     <p>Developer: Oleksandr</p>
                     <p>
                         Contact us:
-                        <a href="https://github.com/Oleksandr-Alex-02/07-routing-nextjs">student@notehub.app</a>
+                        <a href="https://github.com/Oleksandr-Alex-02/09-auth">student@notehub.app</a>
                     </p>
                 </div>
             </div>

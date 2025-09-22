@@ -1,12 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server';
+
 import { cookies } from 'next/headers';
-import { api } from '../../api';
 import { parse } from 'cookie';
 import { isAxiosError } from 'axios';
+import { NextRequest, NextResponse } from 'next/server';
+
+import { api } from '../../api';
+import { logErrorResponse } from '../_utils/utils';
 
 export async function GET(request: NextRequest) {
+
     try {
         const cookieStore = await cookies();
+
         const refreshToken = cookieStore.get('refreshToken')?.value;
         const next = request.nextUrl.searchParams.get('next') || '/';
 
@@ -16,7 +21,9 @@ export async function GET(request: NextRequest) {
                     Cookie: cookieStore.toString(),
                 },
             });
+
             const setCookie = apiRes.headers['set-cookie'];
+
             if (setCookie) {
                 const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
                 let accessToken = '';
@@ -38,13 +45,17 @@ export async function GET(request: NextRequest) {
                 });
             }
         }
+
         return NextResponse.redirect(new URL('/sign-in', request.url));
+
     } catch (error) {
         if (isAxiosError(error)) {
-            (error.response?.data);
+            logErrorResponse(error.response?.data);
+
             return NextResponse.redirect(new URL('/sign-in', request.url));
         }
-        ({ message: (error as Error).message });
+        logErrorResponse({ message: (error as Error).message });
+
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

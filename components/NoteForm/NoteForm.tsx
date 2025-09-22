@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useStore } from '@/lib/store/noteStore';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { createNote } from '@/lib/api/serverApi';
+import { createNote } from '@/lib/api/clientApi';
 import { NoteFormType } from '@/types/note';
 
 const validationForm = Yup.object().shape({

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useDebouncedCallback } from "use-debounce";
 import { useState } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { fetchNotes } from "@/lib/api/serverApi";
+import { fetchNotes } from "@/lib/api/clientApi";
 
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
@@ -29,9 +29,9 @@ export default function NotesClient({ category }: NotesClientProps) {
 
     const { data, isLoading, error } = useQuery({
         queryKey: ['notes', category, searchQuery, page],
-        queryFn: () => fetchNotes(searchQuery, 12, page, category),
+        queryFn: () => fetchNotes(searchQuery, page, category),
         placeholderData: keepPreviousData,
-        // refetchOnMount: false,
+        refetchOnMount: false,
     });
 
     const totalPages = data?.totalPages ?? 1;

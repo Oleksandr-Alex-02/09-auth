@@ -20,8 +20,3 @@ export type UserAuthRequest = {
     password: string;
 };
 
-export interface User {
-    email: string;
-    userName: string;
-    avatar: string;
-}

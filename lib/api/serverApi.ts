@@ -1,7 +1,8 @@
+
 import { cookies } from "next/headers";
 import { nextServer } from "./api";
 import { Note } from "@/types/note";
-import { User } from "@/types/note";
+import { User } from "@/types/user";
 
 export const checkServerSession = async () => {
     const cookieStore = await cookies();
@@ -10,7 +11,6 @@ export const checkServerSession = async () => {
             Cookie: cookieStore.toString(),
         },
     });
-
     return res;
 };
 
@@ -28,6 +28,28 @@ interface NotesHttpResponse {
     notes: Note[];
     totalPages: number;
 }
+
+export interface Category {
+    id: string;
+    name: string;
+    count: number;
+}
+
+export const getCategories = async (): Promise<Category[]> => {
+    const cookieStore = await cookies();
+
+    try {
+        const response = await nextServer.get<Category[]>("/notes/categories", {
+            headers: {
+                Cookie: cookieStore.toString(),
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Failed to fetch categories:", error);
+        throw error;
+    }
+};
 
 export const fetchNotes = async (
     search: string,

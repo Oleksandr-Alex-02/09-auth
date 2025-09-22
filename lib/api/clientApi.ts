@@ -1,5 +1,4 @@
-
-import { User } from "@/types/note";
+import { User } from "@/types/user";
 import { nextServer } from "./api";
 import { NoteFormType, Note } from "@/types/note";
 
@@ -15,11 +14,10 @@ export type LoginRequest = {
     email: string;
     password: string;
 };
-
-export const register = async (data: RegisterRequest): Promise<User> => {
-    const res = await nextServer.post<User>("/auth/register", data);
-    return res.data;
-};
+export async function register(data: RegisterRequest) {
+    const response = await nextServer.post<User>("/auth/register", data);
+    return response.data;
+}
 export const getMe = async () => {
     const { data } = await nextServer.get<User>("/users/me");
     return data;
@@ -43,12 +41,12 @@ export const login = async (data: LoginRequest) => {
     return res.data;
 };
 
-type SessionRequest = {
+type CheckSessionRequest = {
     success: boolean;
 };
 
 export const checkSession = async () => {
-    const res = await nextServer.get<SessionRequest>("/auth/session");
+    const res = await nextServer.get<CheckSessionRequest>("/auth/session");
     return res.data.success;
 };
 
@@ -75,7 +73,7 @@ export const createNote = async (note: NoteFormType): Promise<Note> => {
     return response.data;
 };
 
-export const deleteNote = async (id: string): Promise<Note> => {
+export const getIdNotes = async (id: string): Promise<Note> => {
     const response = await nextServer.delete<Note>(`/notes/${id}`);
     return response.data;
 };
