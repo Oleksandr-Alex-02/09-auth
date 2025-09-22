@@ -45,7 +45,7 @@ export default async function Notes({ params }: Props) {
 
     await qc.prefetchQuery({
         queryKey: ["notes", search, initPage, tag],
-        queryFn: () => fetchNotes(search, perPage, initPage, tag),
+        queryFn: () => fetchNotes(search, initPage, tag),
     })
 
     console.log(slug[0])
