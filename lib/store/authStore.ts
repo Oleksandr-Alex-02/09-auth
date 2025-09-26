@@ -1,14 +1,21 @@
 
 
-import { User } from "@/types/note";
+import { User } from "@/types/user";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type AuthStore = {
-    isAuthenticated: boolean,
-    user: User | null,
-    setUser: (user: User) => void,
-    clearAuth: () => void
+// type AuthStore = {
+//     isAuthenticated: boolean,
+//     user: User | null,
+//     setUser: (user: User) => void,
+//     clearAuth: () => void
+// }
+
+interface AuthStore {
+    isAuthenticated: boolean;
+    user: User | null;
+    setUser: (user: User) => void;
+    clearAuth: () => void;
 }
 
 export const useAuthStore = create<AuthStore>()(

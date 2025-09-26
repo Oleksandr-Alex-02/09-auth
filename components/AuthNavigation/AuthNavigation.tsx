@@ -6,24 +6,24 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { logout } from '@/lib/api/clientApi';
 import { useRouter } from 'next/navigation';
 
-
 export default function AuthNavigation() {
     const router = useRouter();
-    const { isAuthenticated, user } = useAuthStore();
-    const clearIsAuthenticated = useAuthStore(
-        state => state.clearIsAuthenticated
-    );
+    const { isAuthenticated, user, } = useAuthStore();
 
     const handleLogout = async () => {
-        await logout();
-        clearIsAuthenticated();
-        router.push('/sign-in');
+        try {
+            await logout();
+        } catch (error) {
+            console.error("Logout failed:", error);
+        } finally {
+            router.push('/sign-in');
+        }
     };
 
     return isAuthenticated ? (
         <>
             <li className={css.navigationItem}>
-                <Link href="/profile" prefetch={false} className={css.navigationLink}>
+                <Link href="/profile" className={css.navigationLink}>
                     Profile
                 </Link>
             </li>
@@ -37,12 +37,12 @@ export default function AuthNavigation() {
     ) : (
         <>
             <li className={css.navigationItem}>
-                <Link href="/sign-in" prefetch={false} className={css.navigationLink}>
+                <Link href="/sign-in" className={css.navigationLink}>
                     Login
                 </Link>
             </li>
             <li className={css.navigationItem}>
-                <Link href="/sign-up" prefetch={false} className={css.navigationLink}>
+                <Link href="/sign-up" className={css.navigationLink}>
                     Sign up
                 </Link>
             </li>

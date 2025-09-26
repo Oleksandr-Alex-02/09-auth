@@ -52,11 +52,9 @@ export async function GET() {
     } catch (error) {
         if (isAxiosError(error)) {
             logErrorResponse(error.response?.data);
-
             return NextResponse.json({ success: false }, { status: 200 });
         }
         logErrorResponse({ message: (error as Error).message });
-
         return NextResponse.json({ success: false }, { status: 200 });
     }
 }

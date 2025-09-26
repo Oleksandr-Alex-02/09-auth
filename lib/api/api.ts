@@ -2,7 +2,11 @@ import axios from "axios";
 
 export const nextServer = axios.create({
     baseURL:
-        (process.env.NEXT_PUBLIC_API_URL || "https://09-auth-teal.vercel.app/") +
+        (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000') +
         "/api",
     withCredentials: true,
 });
+
+// export const api = axios.create({
+//     baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000',
+// });
