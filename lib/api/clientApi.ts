@@ -24,12 +24,10 @@ export const getMe = async () => {
 };
 export const updateMe = async ({
     username,
-    email,
 }: {
     username: string;
-    email: string;
 }) => {
-    const res = await nextServer.patch<User>("/users/me", { username, email });
+    const res = await nextServer.patch<User>("/users/me", { username });
     return res.data;
 };
 
@@ -45,9 +43,9 @@ type CheckSessionRequest = {
     success: boolean;
 };
 
-export const checkSession = () => {
-    const res = nextServer.get<CheckSessionRequest>("/auth/session");
-    return res;
+export const checkSession = async () => {
+    const res = await nextServer.get<CheckSessionRequest>("/auth/session");
+    return res.data;
 };
 
 export const fetchNotes = async (
@@ -73,12 +71,16 @@ export const createNote = async (note: NoteFormType): Promise<Note> => {
     return response.data;
 };
 
-export const getIdNotes = async (id: string): Promise<Note> => {
-    const response = await nextServer.delete<Note>(`/notes/${id}`);
-    return response.data;
+// export const deleteNote = async (id: string): Promise<Note> => {
+//     const response = await nextServer.delete<Note>(`/notes/${id}`);
+//     return response.data;
+// };
+
+export const deleteNote = async (id: string): Promise<void> => {
+    await nextServer.delete(`/notes/${id}`);
 };
 
-export const fetchNoteById = async (id: string): Promise<Note> => {
-    const response = await nextServer.get<Note>(`/notes/${id}`);
-    return response.data;
-};
+// export const fetchNoteById = async (id: string): Promise<Note> => {
+//     const response = await nextServer.get<Note>(`/notes/${id}`);
+//     return response.data;
+// };

@@ -3,7 +3,7 @@
 import css from './NoteDetails.module.css';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getIdNotes } from '@/lib/api/clientApi';
+import { getIdNotes } from '@/lib/api/serverApi';
 import { Note } from '@/types/note'
 
 export default function NoteDetailsClient() {

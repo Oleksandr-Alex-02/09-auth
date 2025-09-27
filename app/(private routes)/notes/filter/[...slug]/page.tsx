@@ -41,7 +41,15 @@ export default async function Notes({ params }: Props) {
         tag: slug[0] === "All" ? undefined : slug[0]
     };
     const { search, initPage, perPage, tag } = qp
-    const tagNote = slug[0] === "All" ? undefined : slug[0] as "Todo" | "Work" | "Personal" | "Meeting" | "Shopping" | undefined;
+
+    const categorys = ["Todo", "Work", "Personal", "Meeting", "Shopping"] as const;
+    type category = typeof categorys[number];
+
+    const rawTag = slug[0];
+    const tagNote: category | undefined =
+        rawTag === "All" ? undefined :
+            categorys.includes(rawTag as category) ? rawTag as category :
+                undefined;
 
     await qc.prefetchQuery({
         queryKey: ["notes", search, initPage, tag],

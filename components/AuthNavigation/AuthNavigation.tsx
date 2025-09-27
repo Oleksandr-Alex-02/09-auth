@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 
 export default function AuthNavigation() {
     const router = useRouter();
-    const { isAuthenticated, user, } = useAuthStore();
+    const { isAuthenticated, user, clearAuth } = useAuthStore();
 
     const handleLogout = async () => {
         try {
@@ -16,6 +16,7 @@ export default function AuthNavigation() {
         } catch (error) {
             console.error("Logout failed:", error);
         } finally {
+            clearAuth();
             router.push('/sign-in');
         }
     };
