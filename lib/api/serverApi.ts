@@ -1,6 +1,6 @@
 
-import { cookies } from "next/headers";
 import { nextServer } from "./api";
+import { cookies } from "next/headers";
 import { Note } from "@/types/note";
 import { User } from "@/types/user";
 
