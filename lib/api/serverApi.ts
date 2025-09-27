@@ -7,9 +7,9 @@ import { User } from "@/types/user";
 export const checkServerSession = async () => {
     // const cookieStore = await cookies();
     const res = await nextServer.get("/auth/session", {
-        headers: {
-            Cookie: cookieStore.toString(),
-        },
+        // headers: {
+        //     Cookie: cookieStore.toString(),
+        // },
     });
     return res;
 };
@@ -17,9 +17,9 @@ export const checkServerSession = async () => {
 export const getServerMe = async (): Promise<User> => {
     // const cookieStore = await cookies();
     const { data } = await nextServer.get("/users/me", {
-        headers: {
-            Cookie: cookieStore.toString(),
-        },
+        // headers: {
+        //     Cookie: cookieStore.toString(),
+        // },
     });
     return data;
 };
@@ -40,9 +40,9 @@ export const getCategories = async (): Promise<Category[]> => {
 
     try {
         const response = await nextServer.get<Category[]>("/notes/categories", {
-            headers: {
-                Cookie: cookieStore.toString(),
-            },
+            // headers: {
+            //     Cookie: cookieStore.toString(),
+            // },
         });
         return response.data;
     } catch (error) {
@@ -63,21 +63,21 @@ export const fetchNotes = async (
         page,
         perPage: 12,
     };
-    const headers = {
-        Cookie: cookieStore.toString(),
-    };
+    // const headers = {
+    //     Cookie: cookieStore.toString(),
+    // };
     const response = await nextServer.get<NotesHttpResponse>("/notes", {
         params,
-        headers,
+
     });
     return response.data;
 };
 
 export const getIdNotes = async (id: string): Promise<Note> => {
     // const cookieStore = await cookies();
-    const headers = {
-        Cookie: cookieStore.toString(),
-    };
-    const response = await nextServer.get<Note>(`/notes/${id}`, { headers });
+    // const headers = {
+    //     Cookie: cookieStore.toString(),
+    // };
+    const response = await nextServer.get<Note>(`/notes/${id}`);
     return response.data;
 };
