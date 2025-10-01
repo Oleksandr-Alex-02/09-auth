@@ -1,7 +1,7 @@
 // // app/api/categories/route.ts
 
 import { NextResponse } from 'next/server';
-import { api, ApiError } from '../api';
+import { api, ApiError } from '../../api';
 
 
 export async function GET() {
