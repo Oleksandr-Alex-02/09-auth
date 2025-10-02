@@ -43,9 +43,9 @@ type CheckSessionRequest = {
     success: boolean;
 };
 
-export const checkSession = () => {
-    const res = nextServer.get<CheckSessionRequest>("/api/auth/session");
-    return res;
+export const checkSession = async () => {
+    const res = await nextServer.get<CheckSessionRequest>("/api/auth/session");
+    return res.data;
 };
 
 export const fetchNotes = async (
