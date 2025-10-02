@@ -30,7 +30,7 @@ export default function NotePreview() {
 
     return (
         <Modal onClose={close}>
-            <NotePreviewClient note={note} onClose={close} />
+            <NotePreviewClient note={note} />
         </Modal>
     );
 };

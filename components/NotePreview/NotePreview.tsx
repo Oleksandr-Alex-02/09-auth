@@ -1,6 +1,8 @@
 "use client";
 
 import css from './NotePreview.module.css';
+import { useRouter } from 'next/navigation';
+
 
 type Props = {
     note: {
@@ -9,10 +11,14 @@ type Props = {
         createdAt?: string;
         tag: string;
     };
-    onClose: () => void;
+    // onClose: () => void;
 };
 
-export default function NotePreviewClient({ note, onClose }: Props) {
+export default function NotePreviewClient({ note }: Props) {
+    const router = useRouter();
+
+    const close = () => router.back();
+
     return (
         <div className={css.container}>
             <div className={css.item}>
@@ -28,7 +34,7 @@ export default function NotePreviewClient({ note, onClose }: Props) {
             </div>
             <div className={css.footer}>
                 <span className={css.tag}>{note.tag}</span>
-                <button className={css.backBtn} onClick={onClose}>Close</button>
+                <button className={css.backBtn} onClick={close}>Close</button>
             </div>
         </div>
     );
