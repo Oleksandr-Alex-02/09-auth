@@ -15,11 +15,11 @@ export type LoginRequest = {
     password: string;
 };
 export async function register(data: RegisterRequest) {
-    const response = await nextServer.post<User>("/auth/register", data);
+    const response = await nextServer.post<User>("/api/auth/register", data);
     return response.data;
 }
 export const getMe = async () => {
-    const { data } = await nextServer.get<User>("/users/me");
+    const { data } = await nextServer.get<User>("/api/users/me");
     return data;
 };
 export const updateMe = async ({
@@ -27,15 +27,15 @@ export const updateMe = async ({
 }: {
     username: string;
 }) => {
-    const res = await nextServer.patch<User>("/users/me", { username });
+    const res = await nextServer.patch<User>("/api/users/me", { username });
     return res.data;
 };
 
 export const logout = async (): Promise<void> => {
-    await nextServer.post("/auth/logout");
+    await nextServer.post("/api/auth/logout");
 };
 export const login = async (data: LoginRequest) => {
-    const res = await nextServer.post<User>("/auth/login", data);
+    const res = await nextServer.post<User>("/api/auth/login", data);
     return res.data;
 };
 
@@ -44,7 +44,7 @@ type CheckSessionRequest = {
 };
 
 export const checkSession = async () => {
-    const res = await nextServer.get<CheckSessionRequest>("/auth/session");
+    const res = await nextServer.get<CheckSessionRequest>("/api/auth/session");
     return res.data;
 };
 
@@ -92,7 +92,7 @@ export const getIdNotes = async (id: string): Promise<Note> => {
 };
 
 export const fetchIdNotes = async (id: string): Promise<Note> => {
-    const res = await fetch(`/notes/${id}`);
+    const res = await fetch(`/api/notes/${id}`);
 
     if (!res.ok) {
         throw new Error('Failed to fetch note');
