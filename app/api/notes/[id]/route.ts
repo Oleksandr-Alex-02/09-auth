@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import { isAxiosError } from 'axios';
 
 import { api } from '../../api';
-import { logErrorResponse } from '../../auth/_utils/utils';
+import { logErrorResponse } from '../../_utils/utils';
 
 type Props = {
     params: Promise<{ id: string }>;

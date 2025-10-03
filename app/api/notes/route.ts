@@ -4,7 +4,7 @@ import { isAxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { api } from '../api';
-import { logErrorResponse } from '../auth/_utils/utils';
+import { logErrorResponse } from '../_utils/utils';
 
 export async function GET(request: NextRequest) {
 

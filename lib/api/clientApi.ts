@@ -71,16 +71,33 @@ export const createNote = async (note: NoteFormType): Promise<Note> => {
     return response.data;
 };
 
-// export const deleteNote = async (id: string): Promise<Note> => {
-//     const response = await nextServer.delete<Note>(`/notes/${id}`);
-//     return response.data;
-// };
-
-export const deleteNote = async (id: string): Promise<void> => {
-    await nextServer.delete(`/notes/${id}`);
+export const deleteNote = async (id: string): Promise<Note> => {
+    const response = await nextServer.delete<Note>(`/notes/${id}`);
+    return response.data;
 };
 
-// export const fetchNoteById = async (id: string): Promise<Note> => {
-//     const response = await nextServer.get<Note>(`/notes/${id}`);
-//     return response.data;
+// export const deleteNote = async (id: string): Promise<void> => {
+//     await nextServer.delete(`/notes/${id}`);
 // };
+
+// export const fetchNoteById = async (id: string): Promise<Note> => {
+//     // const response = await nextServer.get<Note>(`/notes/${id}`);
+//     const response = await fetch(`/api/notes/${id}`);
+//     return response;
+// };
+
+export const getIdNotes = async (id: string): Promise<Note> => {
+    const response = await nextServer.get<Note>(`/notes/${id}`);
+    return response.data;
+};
+
+export const fetchIdNotes = async (id: string): Promise<Note> => {
+    const res = await fetch(`/api/notes/${id}`);
+
+    if (!res.ok) {
+        throw new Error('Failed to fetch note');
+    }
+
+    const data: Note = await res.json();
+    return data;
+};

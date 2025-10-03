@@ -5,7 +5,7 @@ import { isAxiosError } from 'axios';
 import { cookies } from 'next/headers';
 
 import { api } from '../../api';
-import { logErrorResponse } from '../../auth/_utils/utils';
+import { logErrorResponse } from '../../_utils/utils';
 
 export async function GET() {
     try {
