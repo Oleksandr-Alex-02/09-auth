@@ -73,11 +73,11 @@ export const fetchNotes = async (
     return response.data;
 };
 
-// export const getIdNotes = async (id: string): Promise<Note> => {
-//     const cookieStore = cookies();
-//     const headers = {
-//         Cookie: cookieStore.toString(),
-//     };
-//     const response = await nextServer.get<Note>(`/notes/${id}`, { headers });
-//     return response.data;
-// };
+export const getIdNotes = async (id: string): Promise<Note> => {
+    const cookieStore = cookies();
+    const headers = {
+        Cookie: cookieStore.toString(),
+    };
+    const response = await nextServer.get<Note>(`/notes/${id}`, { headers });
+    return response.data;
+};

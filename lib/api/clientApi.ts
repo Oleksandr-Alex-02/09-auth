@@ -15,11 +15,11 @@ export type LoginRequest = {
     password: string;
 };
 export async function register(data: RegisterRequest) {
-    const response = await nextServer.post<User>("/api/auth/register", data);
+    const response = await nextServer.post<User>("/auth/register", data);
     return response.data;
 }
 export const getMe = async () => {
-    const { data } = await nextServer.get<User>("/api/users/me");
+    const { data } = await nextServer.get<User>("/users/me");
     return data;
 };
 export const updateMe = async ({
@@ -27,7 +27,7 @@ export const updateMe = async ({
 }: {
     username: string;
 }) => {
-    const res = await nextServer.patch<User>("/api/users/me", { username });
+    const res = await nextServer.patch<User>("/users/me", { username });
     return res.data;
 };
 
@@ -35,7 +35,7 @@ export const logout = async (): Promise<void> => {
     await nextServer.post("/api/auth/logout");
 };
 export const login = async (data: LoginRequest) => {
-    const res = await nextServer.post<User>("/api/auth/login", data);
+    const res = await nextServer.post<User>("/auth/login", data);
     return res.data;
 };
 
@@ -44,7 +44,7 @@ type CheckSessionRequest = {
 };
 
 export const checkSession = async () => {
-    const res = await nextServer.get<CheckSessionRequest>("/api/auth/session");
+    const res = await nextServer.get<CheckSessionRequest>("/auth/session");
     return res.data;
 };
 
@@ -76,6 +76,11 @@ export const deleteNote = async (id: string): Promise<Note> => {
     return response.data;
 };
 
+export const getIdNotes = async (id: string): Promise<Note> => {
+    const response = await nextServer.get<Note>(`/notes/${id}`);
+    return response.data;
+};
+
 // export const deleteNote = async (id: string): Promise<void> => {
 //     await nextServer.delete(`/notes/${id}`);
 // };
@@ -86,18 +91,21 @@ export const deleteNote = async (id: string): Promise<Note> => {
 //     return response;
 // };
 
-export const getIdNotes = async (id: string): Promise<Note> => {
-    const response = await nextServer.get<Note>(`/notes/${id}`);
-    return response.data;
-};
+// export const fetchIdNotes = async (id: string): Promise<Note> => {
+//     const res = await fetch(`/api/notes/${id}`);
 
-export const fetchIdNotes = async (id: string): Promise<Note> => {
-    const res = await fetch(`/api/notes/${id}`);
+//     if (!res.ok) {
+//         throw new Error('Failed to fetch note');
+//     }
 
-    if (!res.ok) {
-        throw new Error('Failed to fetch note');
-    }
+//     const data: Note = await res.json();
+//     return data;
+// };
 
-    const data: Note = await res.json();
-    return data;
-};
+// Ендпоінти для автентифікації та користувацьких функцій використовують / api / auth /...та / api / users / me,
+//  але правильними мають бути / auth /...та / users / me(без префікса / api), щоб відповідати бекенд API.
+// Існує дві реалізації отримання нотатки за ID:
+// getIdNotes(використовуючи Axios та правильний ендпоінт / notes / { id }) і fetchIdNotes(використовуючи fetch та / api / notes / { id }).
+// Слід залишити лише функцію на базі Axios; версію на fetch потрібно видалити.
+// Присутні закоментовані альтернативні реалізації для deleteNote та fetchNoteById,
+//  які потрібно видалити для підтримки чистоти коду та уникнення плутанини.
