@@ -1,11 +1,10 @@
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import { isAxiosError } from 'axios';
-import { cookies } from 'next/headers';
-
 import { api } from '../../api';
+import { cookies } from 'next/headers';
 import { logErrorResponse } from '../../_utils/utils';
+import { isAxiosError } from 'axios';
 
 export async function GET() {
     try {

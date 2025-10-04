@@ -1,4 +1,3 @@
-// app/api/api.ts
 
 import axios, { AxiosError } from 'axios';
 

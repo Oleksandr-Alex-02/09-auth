@@ -1,20 +1,20 @@
-// // app/api/categories/route.ts
+// // // app/api/categories/route.ts
 
-import { NextResponse } from 'next/server';
-import { api, ApiError } from '../../api';
+// import { NextResponse } from 'next/server';
+// import { api, ApiError } from '../../api';
 
 
-export async function GET() {
-    try {
-        const { data } = await api('/categories')
-        return NextResponse.json(data)
+// export async function GET() {
+//     try {
+//         const { data } = await api('/categories')
+//         return NextResponse.json(data)
 
-    } catch (error) {
-        return NextResponse.json(
-            {
-                error: (error as ApiError).response?.data?.error ?? (error as ApiError).message,
-            },
-            { status: (error as ApiError).status }
-        )
-    }
-}
+//     } catch (error) {
+//         return NextResponse.json(
+//             {
+//                 error: (error as ApiError).response?.data?.error ?? (error as ApiError).message,
+//             },
+//             { status: (error as ApiError).status }
+//         )
+//     }
+// }
