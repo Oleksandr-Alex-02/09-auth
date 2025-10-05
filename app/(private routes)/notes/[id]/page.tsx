@@ -5,7 +5,6 @@ import { Metadata } from "next";
 
 import NoteDetailsClient from './NoteDetails.client';
 
-
 type NoteDetailsProps = {
     params: Promise<{ id: string }>
 }
@@ -41,8 +40,6 @@ export default async function NoteDetails({ params }: NoteDetailsProps) {
         queryKey: ["note", id],
         queryFn: () => getIdNotes(id),
     })
-
-    //NoteDetailsClient
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
