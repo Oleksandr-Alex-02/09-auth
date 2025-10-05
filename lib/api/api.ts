@@ -5,5 +5,3 @@ export const nextServer = axios.create({
         (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/' + 'api'),
     withCredentials: true,
 });
-
-console.log('API URL:', nextServer.defaults.baseURL);
