@@ -40,7 +40,7 @@ export default async function Notes({ params }: Props) {
         perPage: 12,
         tag: slug[0] === "All" ? undefined : slug[0]
     };
-    const { search, initPage, perPage, tag } = qp
+    const { search, initPage, tag } = qp
 
     const categorys = ["Todo", "Work", "Personal", "Meeting", "Shopping"] as const;
     type category = typeof categorys[number];
