@@ -3,7 +3,7 @@
 import css from './NoteDetails.module.css';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getIdNotes } from '@/lib/api/clientApi';
+import { getNoteById } from '@/lib/api/clientApi';
 import { Note } from '@/types/note'
 
 export default function NoteDetailsClient() {
@@ -12,7 +12,7 @@ export default function NoteDetailsClient() {
 
     const { data, isLoading, error } = useQuery<Note>({
         queryKey: ["note", id],
-        queryFn: () => getIdNotes(id),
+        queryFn: () => getNoteById(id),
         placeholderData: keepPreviousData,
         refetchOnMount: false,
     })

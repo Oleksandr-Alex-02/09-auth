@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
-import { getIdNotes } from '@/lib/api/clientApi';
+import { getNoteById } from '@/lib/api/clientApi';
 import { Note } from '@/types/note'
 
 import Modal from '@/components/Modal/Modal';
@@ -13,8 +13,8 @@ export default function NotePreview() {
     const router = useRouter();
 
     const { data: note, error, isLoading } = useQuery<Note>({
-        queryKey: ["note", { id }],
-        queryFn: () => getIdNotes(id),
+        queryKey: ["note", id],
+        queryFn: () => getNoteById(id),
         refetchOnMount: false,
     })
 

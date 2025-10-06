@@ -77,7 +77,7 @@ export const deleteNote = async (id: string): Promise<Note> => {
     return response.data;
 };
 
-export const getIdNotes = async (id: string): Promise<Note> => {
+export const getNoteById = async (id: string): Promise<Note> => {
     const response = await nextServer.get<Note>(`/notes/${id}`);
     return response.data;
 };

@@ -10,7 +10,7 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { slug } = await params
+    const { slug } = params;
     return {
         title: `Note: ${slug[0]}`,
         description: `Filter ${slug[0]}`,
@@ -30,37 +30,62 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Notes({ params }: Props) {
-    const { slug } = await params;
+    const { slug } = params;
 
-    const qc: QueryClient = new QueryClient()
-    const qp = {
-        name: "notes",
-        search: "",
-        initPage: 1,
-        perPage: 12,
-        tag: slug[0] === "All" ? undefined : slug[0]
-    };
-    const { search, initPage, tag } = qp
+    const qc = new QueryClient();
 
     const categorys = ["Todo", "Work", "Personal", "Meeting", "Shopping"] as const;
-    type category = typeof categorys[number];
+    type Category = typeof categorys[number];
 
     const rawTag = slug[0];
-    const tagNote: category | undefined =
-        rawTag === "All" ? undefined :
-            categorys.includes(rawTag as category) ? rawTag as category :
-                undefined;
+    const tag: Category | undefined = categorys.includes(rawTag as Category)
+        ? (rawTag as Category)
+        : undefined;
+
 
     await qc.prefetchQuery({
-        queryKey: ["notes", search, initPage, tag],
-        queryFn: () => fetchNotes(search, initPage, tag),
-    })
-
-    console.log(slug[0])
+        queryKey: ["notes", "", 1, tag],
+        queryFn: () => fetchNotes("", 1, tag),
+    });
 
     return (
         <HydrationBoundary state={dehydrate(qc)}>
-            <NotesClient category={tagNote} />
+            <NotesClient category={tag} />
         </HydrationBoundary>
-    )
+    );
 }
+
+
+// export default async function Notes({ params }: Props) {
+//     const { slug } = params;
+
+//     const qc: QueryClient = new QueryClient()
+//     const qp = {
+//         name: "notes",
+//         search: "",
+//         initPage: 1,
+//         perPage: 12,
+//         tag: slug[0] === "All" ? undefined : slug[0]
+//     };
+//     const { search, initPage, tag } = qp
+
+//     const categorys = ["Todo", "Work", "Personal", "Meeting", "Shopping"] as const;
+//     type category = typeof categorys[number];
+
+// const rawTag = slug[0];
+// const tagNote: category | undefined =
+//     rawTag === "All" ? undefined :
+//         categorys.includes(rawTag as category) ? rawTag as category :
+//             undefined;
+
+//     await qc.prefetchQuery({
+//         queryKey: ["notes", search, initPage, tag],
+//         queryFn: () => fetchNotes(search, initPage, tag),
+//     })
+
+//     return (
+//         <HydrationBoundary state={dehydrate(qc)}>
+//             <NotesClient category={tagNote} />
+//         </HydrationBoundary>
+//     )
+// }
